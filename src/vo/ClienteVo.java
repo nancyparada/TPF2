@@ -82,4 +82,8 @@ public class ClienteVo {
 	public String getDNI() {
 		return DNI;
 	}
+	
+	public String toString() {
+		return nombre+" "+apellido;
+	}
 }

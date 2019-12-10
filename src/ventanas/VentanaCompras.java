@@ -12,17 +12,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import dao.ClienteDao;
-import vo.ClienteVo;
+import dao.CompraDao;
+import vo.CompraVo;
 
-public class VentanaClientes extends JFrame implements ActionListener {
+public class VentanaCompras extends JFrame implements ActionListener {
 
-	ClienteDao miClienteDao;
+	CompraDao miCompraDao;
 	
 	private JLabel labelTitulo, labelTabla1;
-	private JTextField textCod, textNombre, textApellido, textDireccion, textLocalidad, textProvincia, textCodigoPostal, textTelefono, textDNI;
+	private JTextField textCliente, textArticulo, textFecha, textUnidades;
 
-	private JLabel cod, nombre, apellido,direccion,localidad,provincia,codigoPostal,telefono,DNI;
+	private JLabel codCliente, codArticulo, fecha, unidades;
 	private JButton botonGuardar, botonCancelar;
 	JTable mitabla1;
 	JScrollPane mibarra1;
@@ -31,8 +31,8 @@ public class VentanaClientes extends JFrame implements ActionListener {
 	 * constructor de la clase donde se inicializan todos los componentes de la
 	 * ventana de registro
 	 */
-	public VentanaClientes() {
-		miClienteDao = new ClienteDao();
+	public VentanaCompras() {
+		miCompraDao = new CompraDao();
 		
 		inicializarVentana();
 	}
@@ -55,7 +55,7 @@ public class VentanaClientes extends JFrame implements ActionListener {
 		botonCancelar.addActionListener(this);
 
 		labelTitulo = new JLabel();
-		labelTitulo.setText("REGISTRO DE Clientes");
+		labelTitulo.setText("REGISTRO DE COMPRAS");
 		labelTitulo.setBounds(120, 20, 380, 30);
 		labelTitulo.setFont(new java.awt.Font("Verdana", 1, 18));
 
@@ -65,90 +65,45 @@ public class VentanaClientes extends JFrame implements ActionListener {
 
 
 
-		cod = new JLabel();
-		cod.setText("Codigo:");
-		cod.setBounds(20, 60, 80, 25);
-		add(cod);
+		codCliente = new JLabel();
+		codCliente.setText("Cliente:");
+		codCliente.setBounds(20, 90, 80, 25);
+		add(codCliente);
+
+		textCliente = new JTextField();
+		textCliente.setBounds(90, 90, 100, 25);
+		add(textCliente);
 		
-		textCod = new JTextField();
-		textCod.setBounds(90, 60, 80, 25);
-		add(textCod);
+		codArticulo = new JLabel();
+		codArticulo.setText("Articulo:");
+		codArticulo.setBounds(195, 90, 80, 25);
+		add(codArticulo);
 
-		nombre = new JLabel();
-		nombre.setText("Nombre:");
-		nombre.setBounds(20, 90, 80, 25);
-		add(nombre);
-
-		textNombre = new JTextField();
-		textNombre.setBounds(90, 90, 100, 25);
-		add(textNombre);
+		textArticulo = new JTextField();
+		textArticulo.setBounds(265, 90, 100, 25);
+		add(textArticulo);
 		
-		apellido = new JLabel();
-		apellido.setText("Apellido:");
-		apellido.setBounds(195, 90, 80, 25);
-		add(apellido);
+		fecha = new JLabel();
+		fecha.setText("Fecha:");
+		fecha.setBounds(20, 120, 80, 25);
+		add(fecha);
 
-		textApellido = new JTextField();
-		textApellido.setBounds(265, 90, 100, 25);
-		add(textApellido);
+		textFecha = new JTextField();
+		textFecha.setBounds(90, 120, 100, 25);
+		add(textFecha);
 		
-		direccion = new JLabel();
-		direccion.setText("Direccion:");
-		direccion.setBounds(20, 120, 80, 25);
-		add(direccion);
+		unidades = new JLabel();
+		unidades.setText("unidades:");
+		unidades.setBounds(195, 120, 80, 25);
+		add(unidades);
 
-		textDireccion = new JTextField();
-		textDireccion.setBounds(90, 120, 100, 25);
-		add(textDireccion);
+		textUnidades = new JTextField();
+		textUnidades.setBounds(265, 120, 100, 25);
+		add(textUnidades);
+
 		
-		localidad = new JLabel();
-		localidad.setText("Localidad:");
-		localidad.setBounds(195, 120, 80, 25);
-		add(localidad);
-
-		textLocalidad = new JTextField();
-		textLocalidad.setBounds(265, 120, 100, 25);
-		add(textLocalidad);
-
-		//provincia y telefono   150
 		
-		provincia = new JLabel();
-		provincia.setText("Provincia:");
-		provincia.setBounds(20, 150, 80, 25);
-		add(provincia);
-
-		textProvincia = new JTextField();
-		textProvincia.setBounds(90, 150, 100, 25);
-		add(textProvincia);
 		
-		telefono = new JLabel();
-		telefono.setText("Telefono:");
-		telefono.setBounds(195, 150, 80, 25);
-		add(telefono);
-
-		textTelefono = new JTextField();
-		textTelefono.setBounds(265, 150, 100, 25);
-		add(textTelefono);
-		
-		//codigo postal y DNI   180
-		
-		codigoPostal= new JLabel();
-		codigoPostal.setText("Cod.Postal:");
-		codigoPostal.setBounds(20, 180, 80, 25);
-		add(codigoPostal);
-
-		textCodigoPostal = new JTextField();
-		textCodigoPostal.setBounds(90, 180, 100, 25);
-		add(textCodigoPostal);
-		
-		DNI = new JLabel();
-		DNI.setText("DNI:");
-		DNI.setBounds(195, 180, 80, 25);
-		add(DNI);
-
-		textDNI = new JTextField();
-		textDNI.setBounds(265, 180, 100, 25);
-		add(textDNI);
 
 
 		// ////////////////////////////////////////////
@@ -178,7 +133,7 @@ public class VentanaClientes extends JFrame implements ActionListener {
 	 */
 	public void mostrarDatosUsandoLogica1() {
 
-		String titulos[] = { "Codigo","Nombre", "Apellido", "Direccion","Localidad","Provincia","Cod. Postal","Telefono","DNI"};
+		String titulos[] = { "Cliente", "Articulo","Fecha","Unidades"};
 		String información[][] = obtieneMatriz2();// obtenemos la informacion de
 		// la BD
 
@@ -203,23 +158,19 @@ public class VentanaClientes extends JFrame implements ActionListener {
 		 * llamamos al metodo que retorna la info de la BD y la almacena en la
 		 * lista
 		 */
-		ArrayList<ClienteVo> miLista = miClienteDao.buscarClientesConMatriz();
+		ArrayList<CompraVo> miLista = miCompraDao.buscarCompraConMatriz();
 		/*
 		 * como sabemos que son 4 campos, definimos ese valor por defecto para
 		 * las columnaslas filas dependen de los registros retornados
 		 */
-		String[][] informacion = new String[miLista.size()][9];
+		String[][] informacion = new String[miLista.size()][4];
 
 		for (int x = 0; x < informacion.length; x++) {
 			informacion[x][0] = miLista.get(x).getCodigoCliente() + "";	
-			informacion[x][1] = miLista.get(x).getNombre() + "";
-			informacion[x][2] = miLista.get(x).getApellido() + "";
-			informacion[x][3] = miLista.get(x).getDireccion() + "";
-			informacion[x][4] = miLista.get(x).getLocalidad() + "";
-			informacion[x][5] = miLista.get(x).getProvincia() + "";
-			informacion[x][6] = miLista.get(x).getCodigoPostal() + "";
-			informacion[x][7] = miLista.get(x).getTelefono() + "";
-			informacion[x][8] = miLista.get(x).getDNI() + "";
+			informacion[x][1] = miLista.get(x).getCodigoArticulo() + "";
+			informacion[x][2] = miLista.get(x).getFecha() + "";
+			informacion[x][3] = miLista.get(x).getUnidades() + "";
+			
 		}
 		return informacion;
 	}
@@ -232,15 +183,11 @@ public class VentanaClientes extends JFrame implements ActionListener {
 	 * Limpia el formulario de Registro
 	 */
 	private void limpiar() {
-		textCod.setText("");
-		textNombre.setText("");
-		textApellido.setText("");
-		textDireccion.setText("");
-		textLocalidad.setText("");
-		textProvincia.setText("");
-		textTelefono.setText("");
-		textCodigoPostal.setText("");
-		textDNI.setText("");
+		textCliente.setText("");
+		textArticulo.setText("");
+		textFecha.setText("");
+		textUnidades.setText("");
+		
 	}
 
 	@Override
@@ -248,7 +195,7 @@ public class VentanaClientes extends JFrame implements ActionListener {
 		if (e.getSource() == botonGuardar) {
 
 			try {
-				ClienteVo miCliente = new ClienteVo();
+			/*	ClienteVo miCliente = new ClienteVo();
 				miCliente.setCodigoCliente(Integer.parseInt(textCod.getText()));
 				miCliente.setNombre(textNombre.getText());
 				miCliente.setApellido(textApellido.getText());
@@ -260,7 +207,16 @@ public class VentanaClientes extends JFrame implements ActionListener {
 				miCliente.setDNI(textDNI.getText());
 
 
-				miClienteDao.registrarCliente(miCliente);
+				miClienteDao.registrarCliente(miCliente);*/
+				
+				CompraVo miCompra= new CompraVo();
+				miCompra.setCodigoCliente(Integer.parseInt(textCliente.getText()));
+				miCompra.setCodigoArticulo(Integer.parseInt(textArticulo.getText()));
+				miCompra.setFecha(textFecha.getText());
+				miCompra.setUnidades(Integer.parseInt(textUnidades.getText()));
+				
+				miCompraDao.registrarCompra(miCompra);
+				
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null,
 						"Error en el Ingreso de Datos", "Error",

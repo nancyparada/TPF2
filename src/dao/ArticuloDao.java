@@ -117,4 +117,24 @@ public class ArticuloDao {
 		return miEmpleado;
 	}
 
+	public void actualizarArticulo(ArticuloVo miArticulo) {
+		try {
+			PreparedStatement consulta = conex.getConexion().prepareStatement("update articulos set stock = ? where codigo = ? ");
+			consulta.setInt(2, miArticulo.getIdCodigoArt());
+			consulta.setInt(1, miArticulo.getStockArt());
+			consulta.execute();
+			if(consulta.getUpdateCount()>0) {
+				JOptionPane.showMessageDialog(null,
+						"Stock De Articulo Actualizado Exitosamente", "Información",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"No se Registro, verifique la consola para ver el error",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 }
